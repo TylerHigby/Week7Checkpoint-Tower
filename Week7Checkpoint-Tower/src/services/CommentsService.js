@@ -1,4 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
+import { Forbidden } from "../utils/Errors.js"
 import { eventsService } from "./EventsService.js"
 
 class CommentsService {
@@ -12,6 +13,12 @@ class CommentsService {
     await comment.populate('creator')
     return comment
   }
+
+  async deleteComment(commentId, userId) {
+
+  }
+
+
 
 }
 

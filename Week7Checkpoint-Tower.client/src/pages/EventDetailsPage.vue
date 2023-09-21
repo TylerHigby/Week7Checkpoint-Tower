@@ -16,26 +16,51 @@
           <p>Capacity: {{ event.capacity }}</p>
           <p>Description: {{ event.description }}</p>
           <p>Cancelled: {{ event.isCanceled }}</p>
+          <button v-if="!hasTicket && user.isAuthenticated" :disabled="inProgress" @click="createTicket" role="button" class="btn btn-primary">Get a ticket!</button>
+          <button v-else-if="user.isAuthenticated" @click="deleteTicket" role="button" >Refund Ticket</button>
+          <button v-else disabled role="button" >Login to purchase ticket</button>
         </div>
       </section>
       <!-- //TODO - Add image/name of ticket holders -->
+      <h1 class="text-center">Tickets</h1>
+      <div class="col-12" v-for="ticket in tickets" :key="ticket.id">
+        <!-- {{ ticket.ownerName }}
+        <img  :src="ticket.ownerImg" alt=""> -->
+        <TicketCard :ticket="ticket"/>
+      </div>
+
+
       <!-- //SECTION - Comments -->
-      
+      <div class="container-fluid">
+      <h1 class="text-center">Comments</h1>
+      <div>
+        <CommentForm/>
+      </div>
+      <div v-for="comment in comments" :key="comment.id">
+          <!-- <p>Name:{{ comment.creatorName }}</p>
+          <p>Comment:{{ comment.body }}</p> -->
+          <CommentCard :comment="comment"/>
+      </div>
+    </div>
 </div>
 </template>
 
 <script>
-import { computed, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
 import { AppState } from '../AppState';
+import {ticketsService} from '../services/TicketsService.js'
 
 export default {
 setup() {
+  const inProgress = ref(false)
   const route = useRoute();
   watchEffect(() => {
-  getEventById();
+    getEventById();
+    getCommentsByEventId();
+    getTicketsByEventId();
   });
 async function getEventById(){
   try {
@@ -45,12 +70,43 @@ async function getEventById(){
   }
 }
 
+async function getCommentsByEventId(){
+try {
+  await eventsService.getCommentsByEventId(route.params.eventId)
+} catch (error) {
+  Pop.error(error)
+}
+}
+
+async function getTicketsByEventId(){
+  try {
+    await eventsService.getTicketsByEventId(route.params.eventId)
+  } catch (error) {
+    Pop.error(error)
+  }
+}
+
+
   return {
     user: computed(()=> AppState.user),
     event: computed(()=> AppState.activeEvent),
     comments: computed(()=> AppState.activeEventComments),
     tickets: computed(()=> AppState.activeEventTickets),
-    hasTicket: computed(()=> AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id))
+    hasTicket: computed(()=> AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)),
+async createTicket(){
+  try {
+    inProgress.value = true
+    let ticketData = {eventId: route.params.eventId}
+    await ticketsService.createTicket(ticketData)
+    inProgress.value = false
+  } catch (error) {
+    Pop.error(error)
+  }
+}
+
+
+
+
   };
 },
 };
@@ -62,6 +118,6 @@ async function getEventById(){
   width: 100%;
   object-position: center;
   object-fit: cover;
-
 }
+
 </style>

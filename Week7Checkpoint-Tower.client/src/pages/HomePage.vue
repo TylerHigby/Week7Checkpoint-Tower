@@ -1,5 +1,7 @@
 <template>
-
+<div>
+  <EventForm/>
+</div>
 
 <section class="row gap-2 p-2 m-2">
   <h1 class="text-center">Event Categories</h1>

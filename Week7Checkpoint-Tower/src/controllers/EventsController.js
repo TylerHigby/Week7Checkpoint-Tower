@@ -14,7 +14,18 @@ export class EventsController extends BaseController {
       .get('/:eventId/tickets', this.getTicketsInEvent)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createEvent)
+      .put(':eventId', this.editEvent)
       .delete('/:eventId', this.archiveEvent)
+  }
+  async editEvent(req, res, next) {
+    try {
+      const updates = req.body
+      const eventId = req.params.eventId
+      const editedEvent = await eventsService.editEvent(eventId, updates)
+      res.send(editedEvent)
+    } catch (error) {
+      next(error)
+    }
   }
   async getTicketsInEvent(req, res, next) {
     try {
