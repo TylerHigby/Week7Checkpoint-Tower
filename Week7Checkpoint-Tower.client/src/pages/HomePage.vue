@@ -1,20 +1,63 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+
+
+<section class="row gap-2 p-2 m-2">
+  <h1 class="text-center">Event Categories</h1>
+  <button class="btn col btn-success" @click="filterBy = ''">All Events</button>
+  <button class="btn col btn-primary" @click="filterBy = 'concert'">Concerts</button>
+  <button class="btn col btn-primary" @click="filterBy = 'convention'">Conventions</button>
+  <button class="btn col btn-primary" @click="filterBy = 'sport'">Sports</button>
+  <button class="btn col btn-primary" @click="filterBy = 'digital'">Digitals</button>
+</section>
+
+<Section class="row p-3 m-0">
+
+  <div v-for="e in events" :key="e.id" class="col-6 col-md-3">
+    <!-- <img :src="e.coverImg" alt="">
+    {{ e.name }} -->
+<EventCard :event="e"/>
   </div>
+
+
+</Section>
+
+
 </template>
 
 <script>
+import { computed, onMounted, ref } from "vue";
+import Pop from "../utils/Pop.js";
+import { eventsService} from '../services/EventsService.js'
+import {AppState} from '../AppState.js'
+import EventCard from '../components/EventCard.vue';
+
+
+
 export default {
   setup() {
-    return {}
-  }
+    onMounted(() => {
+getEvents();
+    });
+    const filterBy = ref('')
+    async function getEvents(){
+try {
+await eventsService.getEvents();
+} catch (error) {
+  Pop.error(error)
+}
+    }
+    return {
+      filterBy,
+      events: computed(() =>{
+        if(!filterBy.value){
+          return AppState.events
+        }else{
+          return AppState.events.filter(event => event.type == filterBy.value)
+        }
+      }),
+    }
+  },
+components: {EventCard}
 }
 </script>
 
