@@ -4,7 +4,11 @@ import { BadRequest, Forbidden } from "../utils/Errors.js"
 class EventsService {
   async editEvent(eventId, updates) {
     const originalEvent = await dbContext.Events.findById(eventId)
+    // FIXME throw an error if the event is cancelled
+    // FIXME throw an error if user is not creator of event (look @ line 35)
     if (!originalEvent) throw new Error(`unable to find event at ${eventId}`)
+    // FIXME add properties to edit reference edit on zookeeper node
+
     await originalEvent.save()
     return originalEvent
   }

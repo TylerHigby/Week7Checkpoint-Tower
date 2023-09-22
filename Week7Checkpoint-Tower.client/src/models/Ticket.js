@@ -1,4 +1,4 @@
-import { TowerEvent } from "./Event.js"
+import { TowerEvent } from "../models/Event.js"
 
 export class Ticket{
   constructor(data){

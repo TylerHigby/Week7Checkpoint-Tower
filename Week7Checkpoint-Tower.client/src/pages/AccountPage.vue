@@ -3,6 +3,7 @@
     <h1>Welcome {{ account.name }}</h1>
     <img class="rounded" :src="account.picture" alt="" />
     <p>{{ account.email }}</p>
+    <!-- FIXME when passing ticets as props to eventcard component...make sure you are digging into the nested event....ticket.event -->
   </div>
 </template>
 

@@ -14,13 +14,14 @@ export class EventsController extends BaseController {
       .get('/:eventId/tickets', this.getTicketsInEvent)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createEvent)
-      .put(':eventId', this.editEvent)
       .delete('/:eventId', this.archiveEvent)
+      .put('/:eventId', this.editEvent)
   }
   async editEvent(req, res, next) {
     try {
       const updates = req.body
       const eventId = req.params.eventId
+      // FIXME pass down userInfo
       const editedEvent = await eventsService.editEvent(eventId, updates)
       res.send(editedEvent)
     } catch (error) {

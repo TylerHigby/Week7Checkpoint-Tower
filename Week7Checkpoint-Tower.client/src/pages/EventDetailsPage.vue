@@ -12,13 +12,27 @@
           <p>Event Type: {{ event.type }}</p>
           <p>Created By: {{ event.creatorName }}</p>
           <p>Location: {{ event.location }}</p>
-          <p>Date: {{ event.startDate }}</p>
+          <p>Date: {{ event.startDate.toLocaleDateString() }}</p>
           <p>Capacity: {{ event.capacity }}</p>
+          <p>Tickets Remaining: {{ ticketsLeft }}</p>
+
           <p>Description: {{ event.description }}</p>
           <p>Cancelled: {{ event.isCanceled }}</p>
-          <button v-if="!hasTicket && user.isAuthenticated" :disabled="inProgress" @click="createTicket" role="button" class="btn btn-primary">Get a ticket!</button>
-          <button v-else-if="user.isAuthenticated" @click="deleteTicket" role="button" >Refund Ticket</button>
+
+
+          
+          
+          <div v-if="!event.isCanceled">
+  <button v-if="!hasTicket && user.isAuthenticated" :disabled="inProgress" @click="createTicket" role="button" class="btn btn-primary">Get a ticket!</button>
+          <!-- FIXME for delete...pass id of ticket that the account/user has -->
+          <button v-else-if="user.isAuthenticated" @click="deleteTicket()" role="button" >Refund Ticket</button>
           <button v-else disabled role="button" >Login to purchase ticket</button>
+        </div>
+        <!-- FIXME same idea for sold-out -->
+      <div v-else>
+        <span>CANCELLED</span>
+      </div>
+
         </div>
       </section>
       <!-- //TODO - Add image/name of ticket holders -->
@@ -93,6 +107,10 @@ async function getTicketsByEventId(){
     comments: computed(()=> AppState.activeEventComments),
     tickets: computed(()=> AppState.activeEventTickets),
     hasTicket: computed(()=> AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)),
+ticketsLeft: computed(()=>AppState.activeEvent.capacity-AppState.activeEvent.ticketCount),
+
+
+
 async createTicket(){
   try {
     inProgress.value = true

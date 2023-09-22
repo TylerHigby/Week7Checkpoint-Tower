@@ -8,6 +8,11 @@ export class AccountController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
+      .get('/tickets', this.getAccountTickets)
+  }
+  getAccountTickets(arg0, getAccountTickets) {
+    throw new Error("Method not implemented.")
+    // FIXME reference PostIt "getCollaborationsByAccount"
   }
 
   async getUserAccount(req, res, next) {

@@ -15,11 +15,11 @@ class CommentsService {
   }
 
   async deleteComment(commentId, userId) {
+    // FIXME reference PostIt removeCollaborator in collabService... check against comment creatorId  }
+
+
 
   }
-
-
-
 }
 
-export const commentsService = new CommentsService()
+export const commentsService = new CommentsService();

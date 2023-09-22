@@ -5,6 +5,7 @@ import { api } from "./AxiosService.js"
 
 class TicketsService{
 async createTicket(ticketData){
+  // debugger
   const res = await api.post('api/tickets', ticketData)
   logger.log('new ticket', res.data)
   AppState.activeEventTickets.push(new Ticket(res.data))

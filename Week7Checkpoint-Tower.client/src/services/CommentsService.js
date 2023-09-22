@@ -13,6 +13,7 @@ async createComment(commentData){
 async deleteComment(id){
   logger.log('deleting comment', id)
   const res = await api.delete('api/comments/' + id)
+  // FIXME filter out deleted comment from appstate for reactivity
   logger.log(res.data)
 }
 

@@ -8,13 +8,13 @@ class TicketsService {
   }
 
 
-  // async removeTicket(ticketId, userId) {
-  //   const ticket = await dbContext.Tickets.findById(ticketId).populate('event profile')
-  //   if (!ticket) throw new BadRequest(`no ticket Id at: ${ticketId}`)
-  //   if (userId != ticket.accountId) throw new Forbidden('Nice try!')
-  //   await ticket.remove()
-  //   return `ticket removed ${ticket.event.name} for ${ticket.profile.name}`
-  // }
+  async removeTicket(ticketId, userId) {
+    const ticket = await dbContext.Tickets.findById(ticketId).populate('event profile')
+    if (!ticket) throw new BadRequest(`no ticket Id at: ${ticketId}`)
+    if (userId != ticket.accountId) throw new Forbidden('Nice try!')
+    await ticket.remove()
+    return `ticket removed ${ticket.event.name} for ${ticket.profile.name}`
+  }
 
 
   async createTicket(ticketBody) {

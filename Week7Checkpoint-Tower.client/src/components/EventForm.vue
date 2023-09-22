@@ -11,10 +11,10 @@
       <label for="event-category">Category</label>
       <select class="" v-model="eventData.category" id="event-category" required>
         <option disabled value="">please select a category</option>
-        <option value="">Concert</option>
-        <option value="">Convention</option>
-        <option value="">Sport</option>
-        <option value="">Digital</option>
+        <option value="concert">Concert</option>
+        <option value="convention">Convention</option>
+        <option value="sport">Sport</option>
+        <option value="digital">Digital</option>
       </select>
     </div>
     <div>
