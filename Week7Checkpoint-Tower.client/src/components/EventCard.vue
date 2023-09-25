@@ -3,7 +3,7 @@
 <div class="elevation-5 rounded album-card ">
   <img :src="event.coverImg" alt="" class="rounded">
   <div class="text-center text-black bg-white rounded m-0 p-0 fw-bold">
-    <p>{{ event.name }}</p>
+    <p class="p-2">{{ event.name }}</p>
   </div>
 </div>
 </router-link>

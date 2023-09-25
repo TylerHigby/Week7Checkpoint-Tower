@@ -13,7 +13,7 @@
         <div class="col-12 col-md-6">
 
 <div class="text-center mt-3">
-  <button v-if="event.creatorId == account.id" @click="cancelEvent" class="btn btn-danger">
+  <button v-if="event.creatorId == account.id" :disabled="event.isCanceled == true" @click="cancelEvent()" class="btn btn-danger">
       Cancel Event
   </button>
 </div>
@@ -157,6 +157,9 @@ if (await Pop.confirm ('do u want to cancel the event?')){
   await eventsService.cancelEvent(event)
   Pop.success('cancelled event')
 }
+// if(await Pop.confirm()){
+//   await eventsService.cancelEvent(route.params.id)
+// }
 } catch (error) {
     Pop.error(error)
 }

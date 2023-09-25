@@ -24,8 +24,10 @@ async createEvent(eventData){
 
 async cancelEvent(id){
   logger.log('cancelling event', id)
-
-
+  // const res = await api.delete(`api/events/${id}`)
+  // logger.log('event cancelled', res.data)
+const res = await api.delete(`api/events/${id}`)
+logger.log(res.data)
 }
 
 
