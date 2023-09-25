@@ -4,14 +4,14 @@
     <img class="ProfileImage" :src="comment.creatorImg" alt="">
 
   <div class="card elevation-5 col-10">
-    <div>
+    <div class="m-2 mt-3">
       <b>Name:</b> {{ comment.creatorName }}
     </div>
-    <div>
+    <div class="m-2">
       <b>Comment:</b> {{ comment.body }}
     </div>
-    <button v-if="comment.creatorId == account.id" @click.stop="deleteComment(comment.id)" class="btn btn-danger col-2">
-      delete
+    <button v-if="comment.creatorId == account.id" @click.stop="deleteComment(comment.id)" class="btn btn-danger col-2 m-2">
+      Delete Comment
     </button>
   </div>
 </div>

@@ -21,8 +21,9 @@ export class EventsController extends BaseController {
     try {
       const updates = req.body
       const eventId = req.params.eventId
+      const userId = req.userInfo.id
       // FIXME pass down userInfo
-      const editedEvent = await eventsService.editEvent(eventId, updates)
+      const editedEvent = await eventsService.editEvent(eventId, updates, userId)
       res.send(editedEvent)
     } catch (error) {
       next(error)

@@ -1,8 +1,10 @@
 <template>
 <div class="container-fluid">
   <section class="row">
-    <div>{{ ticket.ownerName }}</div>
-    <img class="ticketimg" :src="ticket.ownerImg" alt="">
+    <div>
+    <div><b>{{ ticket.profile.name }}</b></div>
+    <img class="ticketimg" :src="ticket.profile.picture" alt="">
+    </div>
   </section>
 </div>
 </template>
@@ -21,7 +23,7 @@ setup() {
 
 <style>
 .ticketimg{
-width:10%;
+width:5%;
 aspect-ratio: 1/1;
 border-radius: 25px;
 object-fit: cover;

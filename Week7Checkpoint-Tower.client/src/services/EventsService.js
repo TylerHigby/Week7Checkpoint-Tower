@@ -22,6 +22,12 @@ async createEvent(eventData){
   return newEvent
 }
 
+async cancelEvent(id){
+  logger.log('cancelling event', id)
+
+
+}
+
 
 async getEventById(eventId){
   const res = await api.get(`api/events/${eventId}`)

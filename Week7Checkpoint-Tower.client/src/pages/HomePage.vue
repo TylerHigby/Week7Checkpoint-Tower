@@ -3,13 +3,22 @@
   <EventForm/>
 </div>
 
+
+<!-- <section class="row">
+  <h1 class="text-center">My tickets</h1>
+  <div v-for="ticket in myTickets" :key=ticket.id>
+      <EventCard :event="ticket.event" />
+  </div>
+</section> -->
+
+
 <section class="row gap-2 p-2 m-2">
   <h1 class="text-center">Event Categories</h1>
-  <button class="btn col btn-success" @click="filterBy = ''">All Events</button>
-  <button class="btn col btn-primary" @click="filterBy = 'concert'">Concerts</button>
-  <button class="btn col btn-primary" @click="filterBy = 'convention'">Conventions</button>
-  <button class="btn col btn-primary" @click="filterBy = 'sport'">Sports</button>
-  <button class="btn col btn-primary" @click="filterBy = 'digital'">Digitals</button>
+  <button class="btn col btn-success border-black border-1" @click="filterBy = ''">All Events</button>
+  <button class="btn col btn-primary border-black border-1" @click="filterBy = 'concert'">Concerts</button>
+  <button class="btn col btn-primary border-black border-1" @click="filterBy = 'convention'">Conventions</button>
+  <button class="btn col btn-primary border-black border-1" @click="filterBy = 'sport'">Sports</button>
+  <button class="btn col btn-primary border-black border-1" @click="filterBy = 'digital'">Digitals</button>
 </section>
 
 <Section class="row p-3 m-0">
@@ -27,7 +36,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch, watchEffect } from "vue";
 import Pop from "../utils/Pop.js";
 import { eventsService} from '../services/EventsService.js'
 import {AppState} from '../AppState.js'
@@ -37,7 +46,7 @@ import EventCard from '../components/EventCard.vue';
 
 export default {
   setup() {
-    onMounted(() => {
+    watchEffect(() => {
 getEvents();
     });
     const filterBy = ref('')
@@ -57,7 +66,8 @@ await eventsService.getEvents();
           return AppState.events.filter(event => event.type == filterBy.value)
         }
       }),
-    }
+      myTickets: computed(() => AppState.myTickets)
+    };
   },
 components: {EventCard}
 }

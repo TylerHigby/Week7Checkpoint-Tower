@@ -1,6 +1,7 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { accountService } from '../services/AccountService'
 import BaseController from '../utils/BaseController'
+import { ticketsService } from "../services/TicketsService.js"
 
 export class AccountController extends BaseController {
   constructor() {
@@ -10,9 +11,14 @@ export class AccountController extends BaseController {
       .get('', this.getUserAccount)
       .get('/tickets', this.getAccountTickets)
   }
-  getAccountTickets(arg0, getAccountTickets) {
-    throw new Error("Method not implemented.")
+  async getAccountTickets(req, res, next) {
     // FIXME reference PostIt "getCollaborationsByAccount"
+    try {
+      const tickets = await ticketsService.getAccountTickets(req.userInfo.id)
+      res.send(tickets)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async getUserAccount(req, res, next) {

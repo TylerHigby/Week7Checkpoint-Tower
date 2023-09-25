@@ -10,6 +10,16 @@ async createTicket(ticketData){
   logger.log('new ticket', res.data)
   AppState.activeEventTickets.push(new Ticket(res.data))
 }
+
+async deleteTicket(ticketId){
+const res = await api.delete(`api/tickets/${ticketId}`)
+logger.log('deleting ticket', res.data)
+let indexToRemove = AppState.activeEventTickets.findIndex(ticket => ticket.id == ticketId)
+AppState.activeEventTickets.splice(indexToRemove, 1)
 }
 
+
+
+
+}
 export const ticketsService = new TicketsService()

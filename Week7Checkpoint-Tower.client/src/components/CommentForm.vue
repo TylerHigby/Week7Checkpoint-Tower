@@ -1,11 +1,11 @@
 <template>
-  <div class="container-fluid card">
+  <div class="container-fluid card mb-4">
     <form @submit.prevent="createComment">
-      <div>
+      <div class="m-3">
         <label for="comment-body">Add a comment</label>
-        <input v-model="commentData.body" class="form-control"  type="text">
+        <input v-model="commentData.body" class="form-control mt-3"  type="text">
       </div>
-      <button class="btn btn-primary">Submit</button>
+      <button class="btn btn-primary mt-1 mb-3 ms-3">Submit</button>
     </form>
   </div>
 </template>

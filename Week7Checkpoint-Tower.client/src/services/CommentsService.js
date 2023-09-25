@@ -10,11 +10,13 @@ async createComment(commentData){
   AppState.activeEventComments.push(new Comment(res.data))
 }
 
-async deleteComment(id){
-  logger.log('deleting comment', id)
-  const res = await api.delete('api/comments/' + id)
+async deleteComment(commentId){
+  logger.log('deleting comment', commentId)
+  const res = await api.delete(`api/comments/${commentId}`)
   // FIXME filter out deleted comment from appstate for reactivity
   logger.log(res.data)
+  let indexToRemove = AppState.activeEventComments.find(comment => comment.id == commentId)
+AppState.activeEventComments.splice(indexToRemove, 1)
 }
 
 

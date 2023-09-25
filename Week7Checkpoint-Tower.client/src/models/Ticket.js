@@ -7,7 +7,7 @@ export class Ticket{
     this.accountId = data.accountId
     this.event = data.event ? new TowerEvent(data.event) : null
     this.profile = data.profile
-    this.ownerName = data.profile.name
-    this.ownerImg = data.profile.picture
+    // this.ownerName = data.profile.name
+    // this.ownerImg = data.profile.picture
   }
 }

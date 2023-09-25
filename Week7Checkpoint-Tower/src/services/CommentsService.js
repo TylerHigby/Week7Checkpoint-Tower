@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
-import { Forbidden } from "../utils/Errors.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
 import { eventsService } from "./EventsService.js"
 
 class CommentsService {
@@ -16,9 +16,11 @@ class CommentsService {
 
   async deleteComment(commentId, userId) {
     // FIXME reference PostIt removeCollaborator in collabService... check against comment creatorId  }
-
-
-
+    const comment = await dbContext.Comments.findById(commentId).populate('event creator')
+    if (!comment) throw new BadRequest(`There's no comment to delete with the Id: ${commentId}`)
+    if (userId != comment.creatorId) throw new Forbidden("Nice try. That's not yours")
+    await comment.remove()
+    return `deleted comment from ${comment.event.title} by ${comment.creator.name}`
   }
 }
 
