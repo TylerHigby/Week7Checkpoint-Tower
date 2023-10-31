@@ -18,6 +18,7 @@
   </button>
 </div>
 
+
           <h1 class="text-center mt-3">{{ event.name }}</h1>
           <p class="p-2 ms-5">Event Type: {{ event.type }}</p>
           <p class="p-2 ms-5">Created By: {{ event.creatorName }}</p>
