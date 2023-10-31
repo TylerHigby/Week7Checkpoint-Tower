@@ -5,11 +5,12 @@
     <!-- FIXME when passing ticets as props to eventcard component...make sure you are digging into the nested event....ticket.event -->
 
     <section class="row">
-  <h1 class="text-center p-3">My tickets</h1>
-  <div v-for="ticket in myTickets" :key=ticket.id>
-      <EventCard :event="ticket.event" />
-  </div>
-</section>
+      <h1 class="text-center p-3">My tickets</h1>
+      <div v-for="ticket in myTickets" :key=ticket.id>
+        <EventCard :event="ticket.event" />
+      </div>
+    </section>
+
 
   </div>
 </template>
@@ -23,14 +24,14 @@ import EventCard from '../components/EventCard.vue';
 
 export default {
   setup() {
-    watchEffect(()=> {
+    watchEffect(() => {
       getMyTickets();
     });
-    async function getMyTickets(){
+    async function getMyTickets() {
       try {
         await accountService.getMyTickets()
       } catch (error) {
-          Pop.error(error)
+        Pop.error(error)
       }
     }
     return {
@@ -38,7 +39,7 @@ export default {
       myTickets: computed(() => AppState.myTickets)
     }
   },
-  component: {EventCard}
+  component: { EventCard }
 }
 </script>
 
