@@ -21,7 +21,7 @@ jobs:
 
       - name: Create .env File
         run: |
-          echo "$ENV" > ./server/.env
+          echo "$ENV" > ./$REPO_NAME/.env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
